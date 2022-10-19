@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { PropType, ref} from "@vue/runtime-core";
+import { PropType } from "@vue/runtime-core";
 import Category from "../types/Category"
 
 const props = defineProps({
@@ -8,12 +8,11 @@ const props = defineProps({
         type:Object as PropType<Category>
     }
 })
-const image = ref();
 </script>
 
 <template>
     <div class="category-card">
-        <img class="img-fluid" :src="image" alt="">
+        <img class="img-fluid" :src="link.imgUrl" alt="">
         <div class="text">
             <h4>{{link.name}}</h4>
             <router-link :to="`/${link.name}`">Shop <img src="../assets/shared/desktop/icon-arrow-right.svg" alt=""></router-link>
@@ -40,5 +39,13 @@ h4{
 }
 .text > * {
     color:#633d3d;
+}
+
+@media (min-width:1190px) {
+    .category-card > img{
+        max-width:170px;
+        position: relative;
+        top:-2rem;
+    }
 }
 </style>
