@@ -4,15 +4,15 @@ import Category from '../types/Category'
 const categoryLinks:Category[] = [
     {
         name:"headphones",
-        imgUrl:"shared/desktop/image-category-thumbnail-headphones.png"
+        imgUrl:"https://audiophilee.netlify.app/images/shared/desktop/image-category-thumbnail-headphones.png"
     },
     {
         name:"speakers",
-        imgUrl:"shared/desktop/image-category-thumbnail-speakers.png"
+        imgUrl:"https://audiophilee.netlify.app/images/shared/desktop/image-category-thumbnail-speakers.png"
     },
     {
         name:"earphones",
-        imgUrl:"shared/desktop/image-category-thumbnail-earphones.png"
+        imgUrl:"https://audiophilee.netlify.app/images/shared/desktop/image-category-thumbnail-earphones.png"
     }
 ]
 </script>
@@ -26,7 +26,7 @@ const categoryLinks:Category[] = [
 <style scoped>
 .categories{
     display:flex;
-    gap:1rem;
+    gap:3rem;
     flex-wrap: wrap;
 }
 .categories > div{
@@ -35,6 +35,9 @@ const categoryLinks:Category[] = [
 }
 
 @media (min-width:675px) {
+    .categories{
+        gap:1rem;
+    }
     .categories > div{
         width:calc(33.33% - 1rem);
     }
