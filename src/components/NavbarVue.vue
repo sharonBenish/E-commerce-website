@@ -1,19 +1,26 @@
 <script setup lang="ts">
+import { ref } from '@vue/reactivity';
 import ShopLinksLayout from './ShopLinksLayout.vue';
+
+const showMenu = ref<boolean>(false);
+
+const toggleMenu = ()=>{
+    showMenu.value = !showMenu.value
+}
 </script>
 
 <template>
-    <div class="view">
+    <div class="container">
         <div class="navigation">
-            <div class="mobile-nav">
-                <div class="hamburger">
-                    <img src="../assets/shared/tablet/hamburger.svg" alt="">
-                </div>
-                <div class="drop-down">
-                    <ShopLinksLayout />
-                </div>
-            </div>
             <div class="logo">
+                <div class="mobile-nav">
+                    <div class="hamburger" @click="toggleMenu">
+                        <img src="../assets/shared/tablet/hamburger.svg" alt="">
+                    </div>
+                    <div class="drop-down" v-show="showMenu">
+                        <ShopLinksLayout />
+                    </div>
+                </div>
                 <img src="../assets/shared/desktop/logo.svg" alt="">
             </div>
             <div>
@@ -32,12 +39,16 @@ import ShopLinksLayout from './ShopLinksLayout.vue';
 </template>
 
 <style scoped>
-.view{
+.container{
     background-color: #0e0e0e;
     height: 5rem;
     position: relative;
+    justify-content: center;
+    display:flex;
 }
 .navigation{
+    width:80%;
+    max-width: 1200px;
     display:flex;
     justify-content: space-between;
     align-items: center;
@@ -56,6 +67,11 @@ nav.desktop-nav{
     width:100%;
     left:0;
     right:0;
+    z-index: 10000;
+}
+.logo{
+    display:flex;
+    gap:2rem;
 }
 @media (min-width:1200px) {
     .mobile-nav{
@@ -64,7 +80,10 @@ nav.desktop-nav{
     nav.desktop-nav {
         display: flex;
         justify-content:space-between;
-        gap:10px;
+        gap:1.5rem;
+    }
+    .desktop-nav a{
+        font-weight:800;
     }
 }
 </style>
