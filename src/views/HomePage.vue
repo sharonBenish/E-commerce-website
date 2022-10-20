@@ -1,11 +1,12 @@
 <script setup lang="ts">
 import ShopLinksLayout from "../components/ShopLinksLayout.vue";
+import AboutSection from "../components/AboutSection.vue";
 </script>
 
 <template>
   <div class="container">
     <div class="hero">
-      <div>
+      <div class="content">
           <div class="text">
             <h2>New Product</h2>
             <h1 class="home_banner_title">XX99 Mark II Headphones</h1>
@@ -14,10 +15,10 @@ import ShopLinksLayout from "../components/ShopLinksLayout.vue";
           <button class="see_products">see product</button>
       </div>
     </div>
-    <div class="categories_links">
+    <div class="categories_links content">
       <ShopLinksLayout />
     </div>
-    <div class="grid_layout">
+    <div class="grid_layout content">
       <div class="zx9_speaker card">
         <img src="https://audiophilee.netlify.app/images/home/desktop/image-speaker-zx9.png" alt="" class="desktop img-fluid">
         <img src="https://audiophilee.netlify.app/images/home/tablet/image-speaker-zx9.png" alt="" class="tablet img-fluid">
@@ -44,13 +45,8 @@ import ShopLinksLayout from "../components/ShopLinksLayout.vue";
           <button class="transparent_btn">see product</button>
         </div>
       </div>
-      <div class="about_img card">
-      </div>
-      <div class="about_text">
-        <h3>bringing you the <span>best</span> audio gear</h3>
-        <p>Located at the heart of New York City, Audiophile is the premier store for high end headphones, earphones, speakers, and audio accessories. We have a large showroom and luxury demonstration rooms available for you to browse and experience a wide range of our products. Stop by our store to meet some of the fantastic people who make Audiophile the best place to buy your portable audio equipment.</p>
-      </div>
     </div>
+    <AboutSection />
   </div>
 </template>
 
@@ -67,8 +63,8 @@ import ShopLinksLayout from "../components/ShopLinksLayout.vue";
 }
 
 .hero > div{
-  width: 85%;
-  max-width:1200px;
+  /* width: 85%;
+  max-width:1200px; */
   margin:0 auto;
   display: flex;
   justify-content:center;
@@ -119,8 +115,8 @@ h2{
 }
 
 .categories_links{
-  width:85%;
-  max-width:1200px;
+  /* width:85%;
+  max-width:1200px; */
   margin:0 auto;
   padding: 4rem 0;
 }
@@ -131,7 +127,6 @@ h2{
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
-  overflow: hidden;
 }
 .card h3{
   text-transform: uppercase;
@@ -139,8 +134,11 @@ h2{
 
 .grid_layout{
   margin:0 auto;
-  width:85%;
-  max-width: 1200px;
+  
+  display:grid;
+  gap:3rem;
+  /* width:85%;
+  max-width: 1200px; */
 }
 
 .zx9_speaker{
@@ -232,33 +230,6 @@ h2{
   justify-content: center;
   align-items: center;
 }
-.about_img{
-  height:300px;
-  background-image: url("https://audiophilee.netlify.app/images/shared/desktop/image-best-gear.jpg");
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
-}
-.about_text h3{
-  text-transform: uppercase;
-  font-size:28px;
-  line-height: 44px;
-  font-weight: 700;
-  max-width: 445px;
-  letter-spacing: 1.5px;
-}
-.about_text h3 span{
-  color:#d87d4a;
-  
-}
-.about_text p{
-  font-weight: 500;
-    font-size: 15px;
-    line-height: 25px;
-    color: rgb(0, 0, 0);
-    opacity: 0.5;
-    margin: 32px 0px 0px;
-}
 @media (min-width:675px) {
   .hero>div{
     height:500px;
@@ -288,6 +259,8 @@ h2{
     text-align: left;
     justify-content: space-between;
     gap:1rem;
+    grid-column: 1/3;
+    grid-row:1
   }
   .zx9_speaker > .details{
     max-width:300px;
@@ -295,11 +268,24 @@ h2{
 
   .zx7_speaker {
     background-image: url("https://audiophilee.netlify.app/static/media/image-speaker-zx7-tablet.173a4cb5.jpg");
+    grid-column: 1/3;
+    grid-row: 2;
   }
 
-  .about_img{
-    height:200px;
-    background-image: url("https://audiophilee.netlify.app/images/shared/tablet/image-best-gear.jpg");
+  .yx1_earphones_img{
+    grid-column: 1;
+    grid-row: 3;
+  }
+  .yx1_earphones{
+    grid-column: 2;
+    grid-row:3;
+  }
+
+  .grid_layout{
+    display:grid;
+    grid-template-columns: repeat(2, 1fr);
+    row-gap:2rem;
+    column-gap: 3rem;
   }
 }
 
@@ -358,6 +344,12 @@ h2{
 .about_img{
   height:200px;
   background-image: url("https://audiophilee.netlify.app/images/shared/tablet/image-best-gear.jpg");
+}
+.yx1_earphones{
+  height: 300px;
+}
+.yx1_earphones_img> .product_image{
+  height: 300px;
 }
 }
 </style>
