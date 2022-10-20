@@ -11,7 +11,7 @@ const toggleMenu = ()=>{
 
 <template>
     <div class="container">
-        <div class="navigation">
+        <div class="navigation content">
             <div class="logo">
                 <div class="mobile-nav">
                     <div class="hamburger" @click="toggleMenu">
@@ -47,8 +47,8 @@ const toggleMenu = ()=>{
     display:flex;
 }
 .navigation{
-    width:85%;
-    max-width: 1200px;
+    /* width:85%;
+    max-width: 1200px; */
     display:flex;
     justify-content: space-between;
     align-items: center;
