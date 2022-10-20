@@ -29,11 +29,27 @@ import ShopLinksLayout from "../components/ShopLinksLayout.vue";
           <button>see product</button>
         </div>   
       </div>
-      <div class="zx7_speaker card"></div>
-      <div class="yx1_earphones_img card"></div>
-      <div class="yx1_earphones card"></div>
-      <div class="about_img card"></div>
-      <div class="about_text"></div>
+      <div class="zx7_speaker card">
+        <div class="details">
+          <h3>zx7 speaker</h3>
+          <button class="transparent_btn">see product</button>
+        </div>
+      </div>
+      <div class="yx1_earphones_img card">
+        <div class="product_image"></div>
+      </div>
+      <div class="yx1_earphones card">
+        <div class="details">
+          <h3>yx1 earphones</h3>
+          <button class="transparent_btn">see product</button>
+        </div>
+      </div>
+      <div class="about_img card">
+      </div>
+      <div class="about_text">
+        <h3>bringing you the <span>best</span> audio gear</h3>
+        <p>Located at the heart of New York City, Audiophile is the premier store for high end headphones, earphones, speakers, and audio accessories. We have a large showroom and luxury demonstration rooms available for you to browse and experience a wide range of our products. Stop by our store to meet some of the fantastic people who make Audiophile the best place to buy your portable audio equipment.</p>
+      </div>
     </div>
   </div>
 </template>
@@ -51,7 +67,7 @@ import ShopLinksLayout from "../components/ShopLinksLayout.vue";
 }
 
 .hero > div{
-  width: 80%;
+  width: 85%;
   max-width:1200px;
   margin:0 auto;
   display: flex;
@@ -103,7 +119,7 @@ h2{
 }
 
 .categories_links{
-  width:80%;
+  width:85%;
   max-width:1200px;
   margin:0 auto;
   padding: 4rem 0;
@@ -112,11 +128,18 @@ h2{
 .card{
   border-radius:8px;
   padding:3rem 1rem;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  overflow: hidden;
+}
+.card h3{
+  text-transform: uppercase;
 }
 
 .grid_layout{
   margin:0 auto;
-  width:80%;
+  width:85%;
   max-width: 1200px;
 }
 
@@ -167,6 +190,75 @@ h2{
   z-index:0;
 }
 
+.zx7_speaker {
+  position: relative;
+  padding:101px 0 101px 0;
+  background-image: url("https://audiophilee.netlify.app/static/media/image-speaker-zx7-mobile.82dc33d6.jpg");
+}
+
+.zx7_speaker > .details{
+  max-width:400px;
+}
+
+.card > .details h3{
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 38px;
+  letter-spacing: 2px;
+  margin-bottom: 25px;
+}
+
+.transparent_btn {
+  background-color: transparent;
+  border:1px solid #0e0e0e
+}
+
+.yx1_earphones_img{
+  overflow: hidden;
+  padding: 0;
+}
+
+.yx1_earphones_img > .product_image{
+  height:200px;
+  background-image: url("https://audiophilee.netlify.app/static/media/image-earphones-yx1-mobile.48e16a44.jpg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+.yx1_earphones{
+  height: 200px;
+  background: #f1f1f1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.about_img{
+  height:300px;
+  background-image: url("https://audiophilee.netlify.app/images/shared/desktop/image-best-gear.jpg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+.about_text h3{
+  text-transform: uppercase;
+  font-size:28px;
+  line-height: 44px;
+  font-weight: 700;
+  max-width: 445px;
+  letter-spacing: 1.5px;
+}
+.about_text h3 span{
+  color:#d87d4a;
+  
+}
+.about_text p{
+  font-weight: 500;
+    font-size: 15px;
+    line-height: 25px;
+    color: rgb(0, 0, 0);
+    opacity: 0.5;
+    margin: 32px 0px 0px;
+}
 @media (min-width:675px) {
   .hero>div{
     height:500px;
@@ -199,7 +291,16 @@ h2{
   }
   .zx9_speaker > .details{
     max-width:300px;
-}
+  }
+
+  .zx7_speaker {
+    background-image: url("https://audiophilee.netlify.app/static/media/image-speaker-zx7-tablet.173a4cb5.jpg");
+  }
+
+  .about_img{
+    height:200px;
+    background-image: url("https://audiophilee.netlify.app/images/shared/tablet/image-best-gear.jpg");
+  }
 }
 
 @media (min-width:1190px) {
@@ -232,12 +333,12 @@ h2{
     display:block !important;
     position: relative;
     z-index:10;
-    max-width: 300px;
+    max-width: 350px;
     margin: 0 auto;
   }
 
 
-  .zx9_speaker > .details > h3{
+  .card > .details > h3{
     font-size:3.5rem;
     font-weight:700;
     letter-spacing: 2px;
@@ -248,5 +349,15 @@ h2{
   font-size:1.1rem;
 }
 
+.zx7_speaker{
+  background-image: url("https://audiophilee.netlify.app/static/media/image-speaker-zx7.3d4940e8.jpg");
+}
+.zx7_speaker > .details > h3{
+  font-size:2.5rem;
+}
+.about_img{
+  height:200px;
+  background-image: url("https://audiophilee.netlify.app/images/shared/tablet/image-best-gear.jpg");
+}
 }
 </style>
