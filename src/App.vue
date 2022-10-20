@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import NavbarVue from "./components/NavbarVue.vue";
+import FooterComponent from "./components/FooterComponent.vue";
 
 </script>
 
@@ -9,9 +10,14 @@ import NavbarVue from "./components/NavbarVue.vue";
       <NavbarVue />
     </header>
     <router-view />
-    <footer></footer>
+    <footer>
+      <FooterComponent />
+    </footer>
   </div>
 </template>
 
 <style scoped>
+footer{
+  background:#101010
+}
 </style>

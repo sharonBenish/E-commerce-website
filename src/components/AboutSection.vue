@@ -14,7 +14,7 @@
 
 <style scoped>
 .about-section{
-  margin:2rem auto;
+  margin:4rem auto;
 }
 .about_img{
   height:300px;
@@ -27,7 +27,8 @@
 .about_text{
   display: flex;
   flex-direction: column;
-  align-items:center
+  align-items:center;
+  margin-top:2rem
 }
 .about_text h3{
   text-transform: uppercase;
@@ -67,7 +68,7 @@
   .about_text{
     order:-1;
     text-align:left;
-    
+    margin:0;
     align-items: flex-start;
   }
 }
