@@ -1,17 +1,29 @@
 <script setup lang="ts">
 import ProductComponent from './ProductComponent.vue';
-const products = [1,2,3,4]
+import {products} from '../data/index';
+
+const props = defineProps({
+  category:{
+    type:String,
+    required:true
+  }
+})
+
 </script>
 
 <template>
   <div class="content">
-    <ProductComponent v-for="(product, index) in products" :key="index"/>
+    <ProductComponent v-for="(product, index) in products[category]" :key="index" :index ="Number(index)" :product="product"/>
   </div>
 </template>
 
 <style scoped>
 .content{
-    border:1px solid red;
-    margin:0 auto;
+    margin:3rem auto;
+    display: grid;
+    gap:2rem;
+}
+.content > div{
+
 }
 </style>

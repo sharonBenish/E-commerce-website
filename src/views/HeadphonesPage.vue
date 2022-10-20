@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import ProductList from '../components/ProductList.vue';
+import ShopLinksLayout from '../components/ShopLinksLayout.vue';
+import AboutSection from '../components/AboutSection.vue';
 </script>
 
 <template>
@@ -7,7 +9,9 @@ import ProductList from '../components/ProductList.vue';
     <div class="hero">
       <h2>Headphones</h2>
     </div>
-    <ProductList />
+    <ProductList :category="'headphones'"/>
+    <ShopLinksLayout class="content" />
+    <AboutSection />
   </div>
 </template>
 
@@ -23,5 +27,8 @@ import ProductList from '../components/ProductList.vue';
   color:#fff;
   font-size:2.1rem;
   text-transform:uppercase
+}
+.content{
+  margin: 8rem auto
 }
 </style>
