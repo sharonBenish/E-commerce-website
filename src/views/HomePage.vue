@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import ShopLinksLayout from "../components/ShopLinksLayout.vue";
 import AboutSection from "../components/AboutSection.vue";
+import ProductBtn from "../components/ProductBtn.vue";
 </script>
 
 <template>
@@ -12,7 +13,7 @@ import AboutSection from "../components/AboutSection.vue";
             <h1 class="home_banner_title">XX99 Mark II Headphones</h1>
             <p>Experience natural, lifelike audio and exceptional build quality made for the passionate music enthusiast.</p>
           </div>
-          <button class="see_products">see product</button>
+          <ProductBtn :id="'xx99-mark-ii-headphones'" :category="'headphones'" />
       </div>
     </div>
     <div class="categories_links content">
@@ -27,13 +28,13 @@ import AboutSection from "../components/AboutSection.vue";
         <div class="details">
           <h3>zx9 speaker</h3>
           <p>Upgrade to speakers that are phenomenally built to deliver truly remarkable sound.</p>
-          <button>see product</button>
+          <ProductBtn :id="'zx9-speaker'" :category="'speaker'" />
         </div>   
       </div>
       <div class="zx7_speaker card">
         <div class="details">
           <h3>zx7 speaker</h3>
-          <button class="transparent_btn">see product</button>
+          <ProductBtn :id="'zx7-speaker'" class="transparent_btn" :category="'speakers'" />
         </div>
       </div>
       <div class="yx1_earphones_img card">
@@ -42,7 +43,7 @@ import AboutSection from "../components/AboutSection.vue";
       <div class="yx1_earphones card">
         <div class="details">
           <h3>yx1 earphones</h3>
-          <button class="transparent_btn">see product</button>
+          <ProductBtn :id="'yx1-earphones'" class="transparent_btn" :category="'earphones'" />
         </div>
       </div>
     </div>
@@ -107,11 +108,6 @@ h2{
   text-transform: uppercase;
   margin-bottom:1rem;
   font-weight:400
-}
-
-.see_products{
-  background-color: #d87d4a;
-  color: #fff;
 }
 
 .categories_links{
@@ -208,7 +204,8 @@ h2{
 
 .transparent_btn {
   background-color: transparent;
-  border:1px solid #0e0e0e
+  border:1px solid #0e0e0e;
+  color:#000;
 }
 
 .yx1_earphones_img{

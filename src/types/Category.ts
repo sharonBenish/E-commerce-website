@@ -1,6 +1,8 @@
+import CategoryProducts from "./CategoryProducts"
+
 interface Category {
-    name:string,
-    imgUrl:string
+    title: string,
+    types: CategoryProducts[]
 }
 
 export default Category

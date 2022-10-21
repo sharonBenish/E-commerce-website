@@ -1,12 +1,20 @@
 <script setup lang="ts">
 import CategoryProducts from "../types/CategoryProducts"
+import ProductBtn from "./ProductBtn.vue";
+import ProductQuantity from "./ProductQuantity.vue";
 const props = defineProps({
     index:{
-        type:Number,
-        required:true
+        type:Number
     },
     product:{
-        type:Object as PropType<CategoryProducts>,
+        type:Object,
+        required:true
+    },
+    view:{
+        type:Boolean
+    },
+    category:{
+        type:String,
         required:true
     }
 });
@@ -19,7 +27,7 @@ const isOdd = (idx:number)=>{
 </script>
 
 <template>
-  <div class="grid" :class="[isOdd(index)?'odd': '']">
+  <div class="grid" :class="[index && isOdd(index)?'odd': '']">
     <div class="product_image">
         <img class="desktop img-fluid" :src="product.imageUrl.desktop" alt="">
         <img class="tablet img-fluid" :src="product.imageUrl.tablet" alt="">
@@ -29,7 +37,11 @@ const isOdd = (idx:number)=>{
         <h4>new product</h4>
         <h3 class="product_name">{{product.productName}}</h3>
         <p class="text">{{product.productDescription}}</p>
-        <button>see product</button>
+        <ProductBtn v-if="!view" :id="product.slug" :category="category" />
+        <div v-else>
+            <p class="price">$320.56</p>
+            <ProductQuantity />
+        </div>
     </div>
   </div>
 </template>
@@ -92,6 +104,14 @@ button{
 
 .odd{
     direction: rtl;
+}
+
+.price{
+    margin: 0 0 46px;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 25px;
+    letter-spacing: 1.28571px;
 }
 
 @media (min-width:675px){

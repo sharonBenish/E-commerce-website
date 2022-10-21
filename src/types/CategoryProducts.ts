@@ -3,9 +3,10 @@ interface CategoryProducts{
             imageUrl:{
                 desktop:string,
                 tablet:string,
-                mobile:string
+                mobile:string,
             },
-            productDescription:string
+            productDescription:string,            
+            slug:string
 }
 
 export default CategoryProducts
