@@ -9,6 +9,7 @@ import Category from '../types/Category';
 import ProductContent from '../components/ProductContent.vue';
 import ShopLinksLayout from '../components/ShopLinksLayout.vue';
 import AboutSection from '../components/AboutSection.vue';
+import RecommendedProducts from '../components/RecommendedProducts.vue';
 
 const route = useRoute();
 const category = route.query.category as string;
@@ -23,6 +24,22 @@ const productList = computed(()=>{
     }
 })
 const product = productList.value.find((item:CategoryProducts)=> item.slug == route.params.id) as CategoryProducts;
+const allProducts = computed(()=>{
+    const all = [];
+    for (let item of products.value){
+        all.push(...item.types)
+    }
+    return all
+})
+//console.log(allProducts.value);
+
+const randomItems = (num:number)=>{
+    const shuffled = [...allProducts.value].sort(() => 0.5 - Math.random());
+    return shuffled.slice(0, num);
+}
+
+const recommended = randomItems(3);
+console.log(recommended)
 </script>
 
 <template>
@@ -47,7 +64,10 @@ const product = productList.value.find((item:CategoryProducts)=> item.slug == ro
                 <img class="desktop img-fluid" :src="image.desktop" alt="" v-if="image.desktop.length >0" >
             </div>
         </div>
-        <div class="recommended"></div>
+        <div class="recommended">
+            <h3>YOU MAY LIKE</h3>
+            <RecommendedProducts :products="recommended" />
+        </div>
         <ShopLinksLayout />
         <AboutSection />
     </div>
