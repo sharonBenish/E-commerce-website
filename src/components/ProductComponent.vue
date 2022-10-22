@@ -39,7 +39,7 @@ const isOdd = (idx:number)=>{
         <p class="text">{{product.productDescription}}</p>
         <ProductBtn v-if="!view" :id="product.slug" :category="category" />
         <div v-else>
-            <p class="price">$320.56</p>
+            <p class="price">${{product.price}}</p>
             <ProductQuantity />
         </div>
     </div>

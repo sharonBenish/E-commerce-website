@@ -89,6 +89,28 @@ button:focus-visible {
   text-align: center;
 }
 
+.tablet,.desktop{
+  display: none;
+}
+
+@media (min-width:675px) {
+  .mobile{
+    display: none;
+  }
+  .tablet{
+    display: block;
+  }
+}
+
+@media (min-width:1190px) {
+  .desktop{
+    display: block;
+  }
+  .tablet{
+    display: none;
+  }
+}
+
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;

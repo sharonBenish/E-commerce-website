@@ -1,3 +1,4 @@
+import Content from "./Content"
 interface CategoryProducts{
             productName:string,
             imageUrl:{
@@ -6,7 +7,10 @@ interface CategoryProducts{
                 mobile:string,
             },
             productDescription:string,            
-            slug:string
+            slug:string,
+            price:number,
+            features:string,
+            content:Content[]
 }
 
 export default CategoryProducts
