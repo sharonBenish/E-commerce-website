@@ -1,7 +1,8 @@
 <script setup lang="ts">
+import CategoryProducts from '../types/CategoryProducts';
 import ProductBtn from './ProductBtn.vue';
 const props = defineProps<{
-    products:object
+    products:CategoryProducts[]
 }>()
 </script>
 
@@ -31,6 +32,7 @@ h4{
     letter-spacing: 1.71429px;
     text-transform: uppercase;
     color: #000; 
+    height: 80px;
 }
 .image{
     border-radius: 10px;
@@ -45,6 +47,11 @@ h4{
     flex-direction: column;
     gap:1.5rem;
     align-items: center;
+}
+
+.list{
+    margin-top: 3rem;
+    margin-bottom: 8rem;
 }
 
 @media (min-width:675px) {

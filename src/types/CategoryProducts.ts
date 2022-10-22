@@ -9,8 +9,16 @@ interface CategoryProducts{
             productDescription:string,            
             slug:string,
             price:number,
+            category:string,
             features:string,
-            content:Content[]
+            content:Content[],
+            previewImageUrls:Image[]
 }
 
 export default CategoryProducts
+
+interface Image{
+    mobile:string,
+    tablet:string,
+    desktop:string
+}

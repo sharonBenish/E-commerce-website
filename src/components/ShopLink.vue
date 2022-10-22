@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { PropType } from "@vue/runtime-core";
-import Category from "../types/Category"
+import ShopLinks from "../types/ShopLinks";
 
 const props = defineProps({
     link:{
         required:true,
-        type:Object as PropType<Category>
+        type:Object as PropType<ShopLinks>
     }
 })
 </script>

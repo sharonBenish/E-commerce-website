@@ -38,7 +38,7 @@ const randomItems = (num:number)=>{
     return shuffled.slice(0, num);
 }
 
-const recommended = randomItems(3);
+const recommended:CategoryProducts[] = randomItems(3);
 console.log(recommended)
 </script>
 
@@ -116,6 +116,12 @@ img{
         border-radius: 10px !important;
         overflow: hidden;
     }
+.recommended h3{
+    font-size:24px;
+    line-height: 36px;
+    letter-spacing: 1.14286px;
+    text-transform: uppercase;
+}
 
 @media (min-width:675px){
     .in-the-box{
@@ -137,6 +143,10 @@ img{
         height: 100%;
         max-width: none !important;
     }
+
+    .recommended h3{
+    font-size:32px
+}
 }
 
 @media (min-width:1190px) {
@@ -149,6 +159,9 @@ img{
         display: flex;
         justify-content: space-between;
     }
+    .recommended h3{
+    font-size:2.5rem
+}
     .large{
 
     }

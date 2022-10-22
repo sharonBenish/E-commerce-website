@@ -1,7 +1,7 @@
 <script setup lang="ts">
+import ShopLinks from '../types/ShopLinks';
 import ShopLink from './ShopLink.vue';
-import Category from '../types/Category'
-const categoryLinks:Category[] = [
+const categoryLinks:ShopLinks[]= [
     {
         name:"headphones",
         imgUrl:"https://audiophilee.netlify.app/images/shared/desktop/image-category-thumbnail-headphones.png"
