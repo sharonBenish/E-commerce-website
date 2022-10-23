@@ -1,4 +1,5 @@
 import Content from "./Content"
+import ShopLinks from "./ShopLinks"
 interface CategoryProducts{
             productName:string,
             imageUrl:{
@@ -12,7 +13,8 @@ interface CategoryProducts{
             category:string,
             features:string,
             content:Content[],
-            previewImageUrls:Image[]
+            previewImageUrls:Image[],
+            cart:ShopLinks
 }
 
 export default CategoryProducts
