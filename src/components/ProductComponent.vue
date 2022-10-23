@@ -2,6 +2,7 @@
 import CategoryProducts from "../types/CategoryProducts"
 import ProductBtn from "./ProductBtn.vue";
 import ProductQuantity from "./ProductQuantity.vue";
+import { useStore } from "../store"
 const props = defineProps({
     index:{
         type:Number
@@ -24,6 +25,19 @@ const isOdd = (idx:number)=>{
     }
     return true
 }
+
+const store = useStore()
+
+const addToCart = (amount:number)=>{
+    const item = {
+        slug:props.product.slug,
+        price:props.product.price,
+        cart:props.product.cart,
+        quantity: amount
+    };
+    store.addToCart(item)
+}
+
 </script>
 
 <template>
@@ -40,7 +54,7 @@ const isOdd = (idx:number)=>{
         <ProductBtn v-if="!view" :id="product.slug" :category="category" />
         <div v-else>
             <p class="price">${{product.price}}</p>
-            <ProductQuantity />
+            <ProductQuantity @addToCartClicked="addToCart" />
         </div>
     </div>
   </div>
