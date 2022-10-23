@@ -2,10 +2,18 @@
 import { ref } from '@vue/reactivity';
 import ShopLinksLayout from './ShopLinksLayout.vue';
 
+const emit  = defineEmits<{
+    (e: 'cartClicked'):void
+}>()
+
 const showMenu = ref<boolean>(false);
 
 const toggleMenu = ()=>{
     showMenu.value = !showMenu.value
+}
+
+const cartClciked = ()=>{
+    emit('cartClicked')
 }
 </script>
 
@@ -32,7 +40,7 @@ const toggleMenu = ()=>{
                 </nav>
             </div>
             <div>
-                <img src="../assets/shared/desktop/cart.svg" alt="">
+                <img src="../assets/shared/desktop/cart.svg" alt="" class="cart" @click="cartClciked">
             </div>
         </div>
     </div>
