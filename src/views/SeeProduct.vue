@@ -10,8 +10,12 @@ import ProductContent from '../components/ProductContent.vue';
 import ShopLinksLayout from '../components/ShopLinksLayout.vue';
 import AboutSection from '../components/AboutSection.vue';
 import RecommendedProducts from '../components/RecommendedProducts.vue';
+import { watch } from 'fs';
 
 const route = useRoute();
+const routeId = computed (()=>{
+    return route.params.id
+})
 const category = route.query.category as string;
 const products = ref<Category[]>(data);
 const productList = computed(()=>{
@@ -23,7 +27,7 @@ const productList = computed(()=>{
         return []
     }
 })
-const product = productList.value.find((item:CategoryProducts)=> item.slug == route.params.id) as CategoryProducts;
+const product = productList.value.find((item:CategoryProducts)=> item.slug == routeId.value) as CategoryProducts;
 const allProducts = computed(()=>{
     const all = [];
     for (let item of products.value){
