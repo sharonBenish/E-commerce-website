@@ -2,12 +2,19 @@
 import {useStore} from "../store"
 import { computed } from '@vue/reactivity';
 import CartProduct from './CartProduct.vue';
+import { useRouter } from "vue-router";
 
-
+const router = useRouter();
 const store = useStore();
 const cartItems = computed(()=>{
     return store.cart
 })
+
+const goToCheckOut = ()=>{
+    router.push({
+        name:'checkout'
+    })
+}
 
 </script>
 
@@ -23,7 +30,7 @@ const cartItems = computed(()=>{
             <span>Total:</span>
             <span class="total">$ {{store.getTotal}}</span>
         </div>
-        <button v-if="store.cart.length > 0">checkout</button>
+        <button v-if="store.cart.length > 0" @click="goToCheckOut">checkout</button>
     </div>
 </template>
 

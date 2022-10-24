@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import { ref } from '@vue/reactivity';
+import { useStore } from '../store';
 import ShopLinksLayout from './ShopLinksLayout.vue';
 
+const store = useStore();
 const emit  = defineEmits<{
     (e: 'cartClicked'):void
 }>()
@@ -40,7 +42,10 @@ const cartClciked = ()=>{
                 </nav>
             </div>
             <div>
-                <img src="../assets/shared/desktop/cart.svg" alt="" class="cart" @click="cartClciked">
+                <div class="cart_icon">
+                    <img src="../assets/shared/desktop/cart.svg" alt="" class="cart" @click="cartClciked">
+                    <span class="cart_number" v-show="store.getTotalCartItems > 0">{{store.getTotalCartItems}}</span>
+                </div>
             </div>
         </div>
     </div>
@@ -80,6 +85,25 @@ nav.desktop-nav{
 .logo{
     display:flex;
     gap:2rem;
+}
+.cart_icon{
+    position: relative;
+}
+.cart_number{
+    position: absolute;
+    display: inline-block;
+    background-color: #d87d4a;
+    width:25px;
+    height: 25px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content:center ;
+    color:#fff;
+    font-weight: 600;
+    font-size: 12px;
+    top:-15px;
+    right:-20px;
 }
 @media (min-width:1200px) {
     .mobile-nav{

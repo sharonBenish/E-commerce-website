@@ -19,6 +19,9 @@ export const useStore = defineStore('main', {
                             })
                             .reduce((i,j)=> i+j, 0);
             return total
+        },
+        getTotalCartItems:(state)=>{
+            return state.cart.map(item=>item.quantity).reduce((i,j)=>i+j, 0)
         }
     },
     actions: {
