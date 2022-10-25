@@ -14,7 +14,7 @@ const cartItems = computed(()=>{
 <template>
     <div class="cart_container">
         <div class="header">
-            <div>Cart({{cartItems.length}})</div>
+            <div>Cart( {{cartItems.length}} )</div>
             <p @click="store.removeAllItems">Remove all</p>
         </div>
         <p v-if="store.cart.length < 1">No Items in the Cart</p>
