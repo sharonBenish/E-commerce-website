@@ -40,6 +40,8 @@ const goToCheckOut = ()=>{
     margin:1.5rem auto;
     background-color: #fff;
     padding: 1rem;
+    position: relative;
+    z-index: 100000;
 }
 .header{
     display:flex;

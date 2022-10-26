@@ -1,9 +1,16 @@
 <script setup lang="ts">
+import { emit } from 'process';
 import { ref } from 'vue';
 
 const props = defineProps<{
-    label:string
+    label:string,
+    placeholder:string,
+    modelValue:string
 }>();
+const emit = defineEmits<{
+    (e: 'update:modelValue', value:string ):void
+}>();
+
 const errorMsg = ref<string>("");
 const validateInput = (e:Event)=>{
     const target = e.target as HTMLInputElement;
@@ -14,12 +21,16 @@ const validateInput = (e:Event)=>{
 const clearError = ()=>{
     errorMsg.value=""
 }
+const typing = (e:Event)=>{
+    const target = e.target as HTMLInputElement;
+    emit('update:modelValue', target.value);
+}
 </script>
 
 <template>
     <div class="input_component">
         <label for="name">{{label}}</label>
-        <input type="text" :id="label" @blur="validateInput" @focus="clearError" />
+        <input type="text" :id="label" @blur="validateInput" @focus="clearError" :placeholder="placeholder" :value="modelValue" @input="typing" />
         <p class="form_error">{{errorMsg}}</p>
     </div>
 </template>
