@@ -4,6 +4,7 @@ import HeadphonesPage from '../views/HeadphonesPage.vue'
 import SpeakersPage from '../views/SpeakersPage.vue'
 import EarphonesPage from '../views/EarphonesPage.vue'
 import SeeProduct from '../views/SeeProduct.vue'
+import CheckOutPageVue from '../views/CheckOutPage.vue'
 
 const routes = [
     {
@@ -30,6 +31,11 @@ const routes = [
         path:'/products/:id',
         name:'product',
         component:SeeProduct
+    },
+    {
+        path:'/checkout',
+        name:'checkout',
+        component:CheckOutPageVue
     }
 ]
 

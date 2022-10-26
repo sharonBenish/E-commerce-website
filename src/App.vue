@@ -2,13 +2,16 @@
 import NavbarVue from "./components/NavbarVue.vue";
 import FooterComponent from "./components/FooterComponent.vue";
 import CartComponent from "./components/CartComponent.vue";
-import { ref } from "vue";
-
+import { ref, watch } from "vue";
+import { useRoute } from "vue-router";
+const route = useRoute();
 const cartOpen = ref<boolean>(false);
 const showCart = ()=>{
   cartOpen.value= !cartOpen.value
 }
-
+watch(route, ()=>{
+  cartOpen.value = false
+})
 </script>
 
 <template>
