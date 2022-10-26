@@ -22,7 +22,7 @@ const goToCheckOut = ()=>{
     <div class="cart_container">
         <div class="header">
             <div>Cart( {{cartItems.length}} )</div>
-            <p @click="store.removeAllItems">Remove all</p>
+            <p class="remove_all" @click="store.removeAllItems">Remove all</p>
         </div>
         <p v-if="store.cart.length < 1">No Items in the Cart</p>
         <CartProduct v-else v-for="(item,index) in cartItems" :key="index" :item="item"/>
@@ -63,6 +63,10 @@ button{
     background-color: #d87d4a;
     color: #fff;
     width:100%;
+}
+
+.remove_all{
+    cursor:pointer
 }
 
 @media(min-width: 675px){

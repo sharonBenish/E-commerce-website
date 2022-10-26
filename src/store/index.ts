@@ -1,9 +1,11 @@
 import { defineStore } from 'pinia'
 import CartItem from '../types/CartItem'
+import CategoryProducts from '../types/CategoryProducts'
 
 export const useStore = defineStore('main', {
     state: ()=>({
-        cart:[] as CartItem[]
+        cart:[] as CartItem[],
+        favorites:[] as CategoryProducts[],
     }),
     getters:{
         getItem:(state)=>{
@@ -22,6 +24,9 @@ export const useStore = defineStore('main', {
         },
         getTotalCartItems:(state)=>{
             return state.cart.map(item=>item.quantity).reduce((i,j)=>i+j, 0)
+        },
+        isLiked:(state)=>{
+            return (data:CategoryProducts)=>state.favorites.some(el => el.slug == data.slug)
         }
     },
     actions: {
@@ -42,6 +47,13 @@ export const useStore = defineStore('main', {
         },
         removeAllItems(){
             this.cart = []
+        },
+        addToFavorites(data:CategoryProducts){
+            this.favorites.unshift(data)
+        },
+        removeFromFavorites(data:CategoryProducts){
+            const idx = this.favorites.findIndex((el)=> el.slug === data.slug);
+            this.favorites.splice(idx,1)
         }
     },
   })

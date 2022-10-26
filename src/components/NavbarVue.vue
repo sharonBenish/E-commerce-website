@@ -42,8 +42,11 @@ const cartClciked = ()=>{
                 </nav>
             </div>
             <div class="user_icons">
+                <div class="user_icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="25" height="25"><path fill="none" d="M0 0h24v24H0z"/><path d="M4 22a8 8 0 1 1 16 0h-2a6 6 0 1 0-12 0H4zm8-9c-3.315 0-6-2.685-6-6s2.685-6 6-6 6 2.685 6 6-2.685 6-6 6zm0-2c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4z" fill="rgba(255,255,255,1)"/></svg>
+                </div>
                 <div class="favorites_icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"><path fill="none" stroke="#fff" d="M5.047 2.506c-2.114 0-3.533 1.711-3.533 3.824 0 2.398 3.35 5.263 6.22 7.176 2.871-1.913 6.182-4.824 6.221-7.176.035-2.113-1.333-3.824-3.447-3.824-.902 0-1.817.477-2.774 1.433-.957-.956-1.785-1.433-2.687-1.433z"/></svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="25" height="25"><path fill="none" d="M0 0H24V24H0z"/><path d="M16.5 3C19.538 3 22 5.5 22 9c0 7-7.5 11-10 12.5C9.5 20 2 16 2 9c0-3.5 2.5-6 5.5-6C9.36 3 11 4 12 5c1-1 2.64-2 4.5-2zm-3.566 15.604c.881-.556 1.676-1.109 2.42-1.701C18.335 14.533 20 11.943 20 9c0-2.36-1.537-4-3.5-4-1.076 0-2.24.57-3.086 1.414L12 7.828l-1.414-1.414C9.74 5.57 8.576 5 7.5 5 5.56 5 4 6.656 4 9c0 2.944 1.666 5.533 4.645 7.903.745.592 1.54 1.145 2.421 1.7.299.189.595.37.934.572.339-.202.635-.383.934-.571z" fill="fff"/></svg>
                 </div>
                 <div class="cart_icon">
                     <img src="../assets/shared/desktop/cart.svg" alt="" class="cart" @click="cartClciked">
@@ -76,12 +79,20 @@ nav.desktop-nav{
 }
 .user_icons{
     display: flex;
-    border:1px solid red;
     gap:1.5rem;
     align-items: center;
 }
+.user_icons > div{
+    cursor: pointer;
+}
 
-.favorites_icon > svg{
+
+.user_icon{
+
+}
+.favorites_icon path:last-of-type{
+    fill:#fff;
+    stroke-width:5;
 }
 
 .drop-down{

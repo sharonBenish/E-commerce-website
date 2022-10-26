@@ -10,7 +10,6 @@ import ProductContent from '../components/ProductContent.vue';
 import ShopLinksLayout from '../components/ShopLinksLayout.vue';
 import AboutSection from '../components/AboutSection.vue';
 import RecommendedProducts from '../components/RecommendedProducts.vue';
-import { watch } from 'fs';
 
 const route = useRoute();
 const routeId = computed (()=>{
