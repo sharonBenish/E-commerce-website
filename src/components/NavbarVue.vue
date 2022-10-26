@@ -58,6 +58,9 @@ const cartClciked = ()=>{
 </template>
 
 <style scoped>
+a.router-link-exact-active{
+    color: #d87d4a;
+}
 .container{
     background-color: #0e0e0e;
     height: 5rem;
