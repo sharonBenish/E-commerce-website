@@ -3,7 +3,7 @@ import CategoryProducts from "../types/CategoryProducts"
 import ProductBtn from "./ProductBtn.vue";
 import ProductQuantity from "./ProductQuantity.vue";
 import { useStore } from "../store"
-import { ref } from "vue";
+import { computed, ref } from "vue";
 import CartItem from "../types/CartItem";
 const props = defineProps({
     index:{
@@ -40,17 +40,28 @@ const addToCart = (amount:number)=>{
     store.addToCart(item)
 }
 
-const liked = ref<boolean>(store.isLiked(props.product as CategoryProducts)||false)
+// const liked = ref<boolean>(store.isLiked(props.product as CategoryProducts)||false)
+// const likeItem = ()=>{
+//     liked.value = !liked.value;
+//     if (liked.value){
+//         //add to favorites
+//         store.addToFavorites(props.product as CategoryProducts)
+//     }else{
+//         //remove from favorites
+//         store.removeFromFavorites(props.product as CategoryProducts);
+//     }
+//     console.log(store.favorites)
+// }
+
+const liked = computed(()=>{
+    return store.isLiked(props.product as CategoryProducts)
+})
 const likeItem = ()=>{
-    liked.value = !liked.value;
     if (liked.value){
-        //add to favorites
-        store.addToFavorites(props.product as CategoryProducts)
+        store.removeFromFavorites(props.product as CategoryProducts)
     }else{
-        //remove from favorites
-        store.removeFromFavorites(props.product as CategoryProducts);
+        store.addToFavorites(props.product as CategoryProducts)
     }
-    console.log(store.favorites)
 }
 </script>
 
