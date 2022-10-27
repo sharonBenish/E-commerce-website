@@ -24,6 +24,7 @@ const quantity = computed(()=>{
         <div>
             <h5>{{item.cart.name}}</h5>
             <p class="price">$ {{item.price}}</p>
+            <p class="remove_item" @click="store.removeFromCart(item)">Remove Item</p>
         </div>
         <QuantityComponent :quantity="quantity" @valueChange="updateQuantity" class="quantity" />
     </div>
@@ -41,6 +42,7 @@ const quantity = computed(()=>{
 h5{
     text-transform: uppercase;
     font-size: 1rem;
+    text-align:left
 }
 .price{
     text-align: left;
@@ -48,5 +50,12 @@ h5{
 }
 .quantity{
     margin-left: auto;
+}
+.remove_item{
+    cursor: pointer;
+    color:#d87d4a;
+}
+.remove_item:hover{
+    text-decoration: underline;
 }
 </style>

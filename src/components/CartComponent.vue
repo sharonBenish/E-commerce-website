@@ -66,7 +66,12 @@ button{
 }
 
 .remove_all{
-    cursor:pointer
+    cursor:pointer;
+    font-weight:800;
+    text-decoration: underline;
+}
+.remove_all:hover{
+    color:#d87d4a
 }
 
 @media(min-width: 675px){

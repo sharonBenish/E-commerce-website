@@ -5,6 +5,9 @@ import CustomRadioInput from '../components/CustomRadioInput.vue';
 import { useStore } from '../store';
 import { ref } from 'vue';
 
+const emit = defineEmits<{
+    (e:'paid'):void
+}>();
 const store = useStore();
 
 const cartItems = computed(()=>{
@@ -24,6 +27,27 @@ const checkoutForm = ref({
     paymentMethod:"cash"
 })
 
+const isValid = ref<boolean>(true)
+const formValidation = (event:Event)=>{
+    const inputs =Array.from(document.querySelectorAll('input'));
+    inputs.forEach((input:HTMLInputElement) =>{
+        input.focus();
+        input.blur();
+        if(input.classList.value.includes('invalid')){
+            isValid.value = false;
+        }
+    })
+}
+
+
+const pay = (e:Event)=>{
+    formValidation(e)
+    if(isValid.value){
+        // console.log("PAID")
+        emit('paid')
+    }
+    isValid.value = true
+}
 </script>
 
 <template>
@@ -33,18 +57,18 @@ const checkoutForm = ref({
             <div>
                 <h3>Billing Details</h3>
                 <div class="inputs">
-                    <CustomInput :label="'name'" :placeholder="'John Doe'" v-model="checkoutForm.name"/>
-                    <CustomInput :label="'email'" :placeholder="'example@mail.com'" v-model="checkoutForm.email" />
-                    <CustomInput :label="'number'" :placeholder="'+2347037401277'" v-model="checkoutForm.number" />
+                    <CustomInput :label="'name'" :placeholder="'John Doe'" v-model="checkoutForm.name" :type="'text'" />
+                    <CustomInput :label="'email'" :placeholder="'example@mail.com'" v-model="checkoutForm.email" :type="'email'" />
+                    <CustomInput :label="'number'" :placeholder="'+2347037401277'" v-model="checkoutForm.number" :type="'number'" />
                 </div>
             </div>
             <div>
                 <h3>Shipping Details</h3>
                 <div class="inputs">
-                    <CustomInput :label="'address'" :placeholder="'No 9 Courier road'" v-model="checkoutForm.address" />
-                    <CustomInput :label="'zipcode'" :placeholder="'11072'" v-model="checkoutForm.zipcode" />
-                    <CustomInput :label="'city'" :placeholder="'Port Harcourt'" v-model="checkoutForm.city" />
-                    <CustomInput :label="'country'" :placeholder="'Nigeria'" v-model="checkoutForm.country" />
+                    <CustomInput :label="'address'" :placeholder="'No 9 Courier road'" v-model="checkoutForm.address" :type="'text'" />
+                    <CustomInput :label="'zipcode'" :placeholder="'11072'" v-model="checkoutForm.zipcode" :type="'text'" />
+                    <CustomInput :label="'city'" :placeholder="'Port Harcourt'" v-model="checkoutForm.city" :type="'text'" />
+                    <CustomInput :label="'country'" :placeholder="'Nigeria'" v-model="checkoutForm.country" :type="'text'" />
                 </div>
             </div>
             <div>
@@ -61,8 +85,8 @@ const checkoutForm = ref({
                 </div>
                 <div class="e_money" v-else>
                     <div class="inputs">
-                        <CustomInput :label="'card-number'" :placeholder="'238521993'" v-model="checkoutForm.cardNumber" />
-                        <CustomInput :label="'pin'" :placeholder="'6891'" v-model="checkoutForm.pin" />
+                        <CustomInput :label="'card-number'" :placeholder="'238521993'" v-model="checkoutForm.cardNumber" :type="'number'" />
+                        <CustomInput :label="'pin'" :placeholder="'6891'" v-model="checkoutForm.pin" :type="'number'" />
                     </div>
                 </div>
             </div>
@@ -82,7 +106,7 @@ const checkoutForm = ref({
                 <p>Shipping <span>$ 50</span></p>
             </div>
             <p class="grand_total">Grand Total <span>$ {{store.getTotal + 50}}</span></p>
-            <button class="pay">continue & pay</button>
+            <button class="pay" @click="pay">continue & pay</button>
         </div>
     </div>
 </template>

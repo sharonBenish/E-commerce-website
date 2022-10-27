@@ -48,6 +48,10 @@ export const useStore = defineStore('main', {
         removeAllItems(){
             this.cart = []
         },
+        removeFromCart(data:CartItem){
+            const idx = this.cart.findIndex((el)=> el.slug === data.slug);
+            this.cart.splice(idx,1)
+        },
         addToFavorites(data:CategoryProducts){
             this.favorites.unshift(data)
         },

@@ -6,13 +6,15 @@ import ShopLinksLayout from './ShopLinksLayout.vue';
 const store = useStore();
 const emit  = defineEmits<{
     (e: 'cartClicked'):void,
-    (e: 'favoritesClicked'):void
+    (e: 'favoritesClicked'):void,
+    (e: 'menuClicked'):void
 }>()
 
 const showMenu = ref<boolean>(false);
 
 const toggleMenu = ()=>{
-    showMenu.value = !showMenu.value
+    showMenu.value = !showMenu.value;
+    emit('menuClicked')
 }
 
 const cartClciked = ()=>{
@@ -109,9 +111,21 @@ nav.desktop-nav{
     position:absolute;
     top:100%;
     width:100%;
+    height:100vh;
     left:0;
     right:0;
-    z-index: 10000;
+    z-index: 1000000;
+    overflow-x: hidden;
+    background: rgba(0,0,0,.8);
+}
+
+.drop-down > div{
+    width:100vw;
+    position: absolute;
+    padding: 3rem 2rem;
+    top:0rem;
+    left:50%;
+    transform: translateX(-50%);
 }
 .logo{
     display:flex;

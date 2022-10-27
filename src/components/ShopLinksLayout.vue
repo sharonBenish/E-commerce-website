@@ -28,6 +28,7 @@ const categoryLinks:ShopLinks[]= [
     display:flex;
     gap:3rem;
     flex-wrap: wrap;
+    background-color: #fff;
 }
 .categories > div{
     width:100%;

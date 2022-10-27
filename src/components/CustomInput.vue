@@ -1,25 +1,36 @@
 <script setup lang="ts">
-import { emit } from 'process';
 import { ref } from 'vue';
 
 const props = defineProps<{
     label:string,
     placeholder:string,
-    modelValue:string
+    modelValue:string,
+    type:string
 }>();
+
 const emit = defineEmits<{
     (e: 'update:modelValue', value:string ):void
 }>();
 
 const errorMsg = ref<string>("");
+
 const validateInput = (e:Event)=>{
     const target = e.target as HTMLInputElement;
     if (target.value.trim() == ""){
-        errorMsg.value = "Required"
+        errorMsg.value = "Required";
+        target.classList.add('invalid')
+    }else if(target.type == 'email'){
+        const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!re.test(target.value)){
+            errorMsg.value = "Invalid email";
+            target.classList.add('invalid')
+        }
     }
 }
-const clearError = ()=>{
-    errorMsg.value=""
+const clearError = (e:Event)=>{
+    const target = e.target as HTMLInputElement;
+    errorMsg.value="";
+    target.classList.remove('invalid')
 }
 const typing = (e:Event)=>{
     const target = e.target as HTMLInputElement;
@@ -30,7 +41,7 @@ const typing = (e:Event)=>{
 <template>
     <div class="input_component">
         <label for="name">{{label}}</label>
-        <input type="text" :id="label" @blur="validateInput" @focus="clearError" :placeholder="placeholder" :value="modelValue" @input="typing" />
+        <input :type="type" :id="label" @blur="validateInput" @focus="clearError" :placeholder="placeholder" :value="modelValue" @input="typing" />
         <p class="form_error">{{errorMsg}}</p>
     </div>
 </template>
@@ -77,5 +88,14 @@ input:focus{
     color: #cd2c2c;
 }
 
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
 
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
 </style>
