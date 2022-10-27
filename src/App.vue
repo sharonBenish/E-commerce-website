@@ -2,25 +2,34 @@
 import NavbarVue from "./components/NavbarVue.vue";
 import FooterComponent from "./components/FooterComponent.vue";
 import CartComponent from "./components/CartComponent.vue";
+import FavoritesComponent from "./components/FavoritesComponent.vue";
 import { ref, watch } from "vue";
 import { useRoute } from "vue-router";
 const route = useRoute();
 const cartOpen = ref<boolean>(false);
+const favoritesOpen = ref<boolean>(false);
 const showCart = ()=>{
   cartOpen.value= !cartOpen.value
 }
+const showFavorites = ()=>{
+ favoritesOpen.value = !favoritesOpen.value
+}
 watch(route, ()=>{
-  cartOpen.value = false
+  cartOpen.value = false;
+  favoritesOpen.value = false;
 })
 </script>
 
 <template>
-  <div class="container" :class="[cartOpen?'cart_open': '']">
+  <div class="container" :class="[cartOpen?'cart_open': '', favoritesOpen?'favorites_open':'']">
     <header>
-      <NavbarVue @cartClicked="showCart" />
+      <NavbarVue @cartClicked="showCart" @favoritesClicked="showFavorites" />
     </header>
     <div class="modal-container" v-if="cartOpen">
       <CartComponent />
+    </div>
+    <div class="modal-container" v-if="favoritesOpen">
+      <FavoritesComponent />
     </div>
     <router-view :key="$route.fullPath" />
     <footer>
@@ -30,7 +39,7 @@ watch(route, ()=>{
 </template>
 
 <style scoped>
-.container.cart_open{
+.container.cart_open, .container.favorites_open{
   overflow: hidden;
   max-height: 100vh;
 }

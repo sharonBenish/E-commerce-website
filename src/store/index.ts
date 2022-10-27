@@ -54,6 +54,9 @@ export const useStore = defineStore('main', {
         removeFromFavorites(data:CategoryProducts){
             const idx = this.favorites.findIndex((el)=> el.slug === data.slug);
             this.favorites.splice(idx,1)
+        },
+        removeAllFavorites(){
+            this.favorites = []
         }
     },
   })
