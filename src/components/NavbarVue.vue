@@ -8,20 +8,35 @@ const emit  = defineEmits<{
     (e: 'cartClicked'):void,
     (e: 'favoritesClicked'):void,
     (e: 'menuClicked'):void
+}>();
+
+const props = defineProps<{
+    modalOpen:boolean
 }>()
 
 const showMenu = ref<boolean>(false);
+const userDropdown = ref<boolean>(false);
 
 const toggleMenu = ()=>{
     showMenu.value = !showMenu.value;
+    userDropdown.value = false;
     emit('menuClicked')
 }
 
+const toggleUserDropdown = ()=>{
+    if(props.modalOpen){
+        return
+    }
+    userDropdown.value = !userDropdown.value;
+}
+
 const cartClciked = ()=>{
+    userDropdown.value = false;
     emit('cartClicked')
 }
 
 const favoritesClicked = ()=>{
+    userDropdown.value = false;
     emit('favoritesClicked')
 }
 </script>
@@ -49,8 +64,15 @@ const favoritesClicked = ()=>{
                 </nav>
             </div>
             <div class="user_icons">
-                <div class="user_icon">
+                <div class="user_icon" @click="toggleUserDropdown">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="25" height="25"><path fill="none" d="M0 0h24v24H0z"/><path d="M4 22a8 8 0 1 1 16 0h-2a6 6 0 1 0-12 0H4zm8-9c-3.315 0-6-2.685-6-6s2.685-6 6-6 6 2.685 6 6-2.685 6-6 6zm0-2c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4z" fill="rgba(255,255,255,1)"/></svg>
+                    <div v-if="userDropdown">
+                        <ul>
+                            <li>Login</li>
+                            <li>Sign Up</li>
+                            <li>Account History</li>
+                        </ul>
+                    </div>
                 </div>
                 <div class="favorites_icon" @click="favoritesClicked">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="25" height="25"><path fill="none" d="M0 0H24V24H0z"/><path d="M16.5 3C19.538 3 22 5.5 22 9c0 7-7.5 11-10 12.5C9.5 20 2 16 2 9c0-3.5 2.5-6 5.5-6C9.36 3 11 4 12 5c1-1 2.64-2 4.5-2zm-3.566 15.604c.881-.556 1.676-1.109 2.42-1.701C18.335 14.533 20 11.943 20 9c0-2.36-1.537-4-3.5-4-1.076 0-2.24.57-3.086 1.414L12 7.828l-1.414-1.414C9.74 5.57 8.576 5 7.5 5 5.56 5 4 6.656 4 9c0 2.944 1.666 5.533 4.645 7.903.745.592 1.54 1.145 2.421 1.7.299.189.595.37.934.572.339-.202.635-.383.934-.571z" fill="fff"/></svg>
@@ -94,11 +116,6 @@ nav.desktop-nav{
 }
 .user_icons > div{
     cursor: pointer;
-}
-
-
-.user_icon{
-
 }
 .favorites_icon path:last-of-type{
     fill:#fff;
@@ -149,6 +166,40 @@ nav.desktop-nav{
     font-size: 12px;
     top:-15px;
     right:-20px;
+}
+
+.user_icon{
+    position: relative;
+}
+
+.user_icon > div {
+    position: absolute;
+    background:#0e0e0e;
+    border:1px solid #fff;
+    width:150px;
+    color:#fff;
+    font-size:14px;
+    top:100%;
+    left:0;
+    transform: translateX(calc( -50% + 15px));
+}
+
+.user_icon> div> ul{
+    list-style: none;
+    margin:0;
+    text-align:left;
+}
+
+.user_icon > div li { 
+    padding: 0.6rem 1rem;
+}
+
+.user_icon > div li:hover{
+    color:#d87d4a
+}
+
+.user_icon > div li:not(:last-of-type){
+    border-bottom:1px solid #fff;
 }
 @media (min-width:1200px) {
     .mobile-nav{

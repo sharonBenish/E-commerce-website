@@ -37,7 +37,7 @@ watch(route, ()=>{
   <div class="container" :class="[cartOpen?'cart_open': '', favoritesOpen?'favorites_open':'', confirmationOpen?'confirmation_open':'']">
     <header>
       <div class="nav-modal" :class="[menuOpen?'menu_open':'']">
-        <NavbarVue @cartClicked="showCart" @favoritesClicked="showFavorites" @menuClicked="showMenu" />
+        <NavbarVue @cartClicked="showCart" @favoritesClicked="showFavorites" @menuClicked="showMenu" :modalOpen="cartOpen || favoritesOpen || menuOpen || confirmationOpen" />
       </div>
     </header>
     <div class="modal-container" v-if="cartOpen">
