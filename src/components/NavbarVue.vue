@@ -1,9 +1,14 @@
 <script setup lang="ts">
+import { getAuth , signOut } from '@firebase/auth';
 import { ref } from '@vue/reactivity';
+import { useRouter } from 'vue-router';
 import { useStore } from '../store';
 import ShopLinksLayout from './ShopLinksLayout.vue';
 
 const store = useStore();
+const router = useRouter();
+const auth = getAuth();
+
 const emit  = defineEmits<{
     (e: 'cartClicked'):void,
     (e: 'favoritesClicked'):void,
@@ -39,6 +44,27 @@ const favoritesClicked = ()=>{
     userDropdown.value = false;
     emit('favoritesClicked')
 }
+
+const goToLogin = ()=>{
+    router.push({
+        name:'login'
+    })
+}
+const goToSignup = ()=>{
+    router.push({
+        name:'signup'
+    })
+}
+
+const logOut = ()=>{
+    signOut(auth)
+        .then(()=>{
+            console.log("user logged out")
+        })
+        .catch((err)=>{
+            console.log(err.message)
+        })
+}
 </script>
 
 <template>
@@ -68,8 +94,9 @@ const favoritesClicked = ()=>{
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="25" height="25"><path fill="none" d="M0 0h24v24H0z"/><path d="M4 22a8 8 0 1 1 16 0h-2a6 6 0 1 0-12 0H4zm8-9c-3.315 0-6-2.685-6-6s2.685-6 6-6 6 2.685 6 6-2.685 6-6 6zm0-2c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4z" fill="rgba(255,255,255,1)"/></svg>
                     <div v-if="userDropdown">
                         <ul>
-                            <li>Login</li>
-                            <li>Sign Up</li>
+                            <li @click="goToLogin">Login</li>
+                            <li @click="logOut">Logout</li>
+                            <li @click="goToSignup">Sign Up</li>
                             <li>Account History</li>
                         </ul>
                     </div>
