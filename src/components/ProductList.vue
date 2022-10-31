@@ -11,7 +11,7 @@ const props = defineProps({
     required:true
   }
 })
-const products =ref<Category[]>(data);
+const products =ref<Category[]>(data as Category[]);
 const productList = computed(()=>{
   const types = products.value.find(product => product.title == props.category);
   if (types){
