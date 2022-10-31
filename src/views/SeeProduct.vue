@@ -16,7 +16,7 @@ const routeId = computed (()=>{
     return route.params.id
 })
 const category = route.query.category as string;
-const products = ref<Category[]>(data);
+const products = ref<Category[]>(data as Category[]);
 const productList = computed(()=>{
     const types = products.value.find(product => product.title == category);
     if (types){
