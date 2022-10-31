@@ -3,8 +3,10 @@ import { ref } from 'vue';
 import CustomInput from '../components/CustomInput.vue';
 import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth'
 import { useRouter } from 'vue-router';
+import { useStore } from '../store';
 
 const router = useRouter();
+const store = useStore();
 
 const signupDetails = ref({
     email:"",
@@ -20,10 +22,12 @@ const signUp = ()=>{
         createUserWithEmailAndPassword(auth, signupDetails.value.email, signupDetails.value.password)
             .then((cred)=>{
                 console.log(cred.user);
+                store.logIn();
                 form.value.reset();
-                router.push({
-                    name:'home'
-                })
+                router.go(-1);
+                // router.push({
+                //     name:'home'
+                // })
             })
             .catch(err => console.log(err.message))
     }
@@ -38,6 +42,7 @@ const signUp = ()=>{
             <CustomInput :label="'name'" :placeholder="'John Doe'" v-model="signupDetails.username" :type="'text'" />
             <CustomInput :label="'password'" :placeholder="''" v-model="signupDetails.password" :type="'password'" />
             <CustomInput :label="'confirm password'" :placeholder="''" v-model="signupDetails.confirmPassword" :type="'password'" />
+            <p><small>Already have an account? <router-link to="/login">Log In</router-link></small></p>
             <button type="submit">Log in</button>
         </form>
     </div>
