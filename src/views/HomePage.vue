@@ -24,7 +24,7 @@ import ProductBtn from "../components/ProductBtn.vue";
         <img src="https://audiophilee.netlify.app/images/home/desktop/image-speaker-zx9.png" alt="" class="desktop img-fluid">
         <img src="https://audiophilee.netlify.app/images/home/tablet/image-speaker-zx9.png" alt="" class="tablet img-fluid">
         <img src="https://audiophilee.netlify.app/images/home/mobile/image-speaker-zx9.png" alt="" class="mobile img-fluid">
-        <img src="	https://audiophilee.netlify.app/images/home/desktop/pattern-circles.svg" alt="" class="circles img-fluid">
+        <img src="https://audiophilee.netlify.app/images/home/desktop/pattern-circles.svg" alt="" class="circles img-fluid">
         <div class="details">
           <h3>zx9 speaker</h3>
           <p>Upgrade to speakers that are phenomenally built to deliver truly remarkable sound.</p>
