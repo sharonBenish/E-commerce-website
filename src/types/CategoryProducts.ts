@@ -14,7 +14,8 @@ interface CategoryProducts{
             features:string,
             content:Content[],
             previewImageUrls:Image[],
-            cart:ShopLinks
+            cart:ShopLinks,
+            docId:string
 }
 
 export default CategoryProducts

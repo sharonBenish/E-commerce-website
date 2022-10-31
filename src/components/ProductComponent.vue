@@ -5,6 +5,7 @@ import ProductQuantity from "./ProductQuantity.vue";
 import { useStore } from "../store"
 import { computed, ref } from "vue";
 import CartItem from "../types/CartItem";
+import { useRouter } from "vue-router";
 const props = defineProps({
     index:{
         type:Number
@@ -29,6 +30,7 @@ const isOdd = (idx:number)=>{
 }
 
 const store = useStore()
+const router = useRouter()
 
 const addToCart = (amount:number)=>{
     const item = {
@@ -57,6 +59,12 @@ const liked = computed(()=>{
     return store.isLiked(props.product as CategoryProducts)
 })
 const likeItem = ()=>{
+    if (!store.isLoggedIn){
+        router.push({
+            name:'login'
+        })
+        return
+    }
     if (liked.value){
         store.removeFromFavorites(props.product as CategoryProducts)
     }else{

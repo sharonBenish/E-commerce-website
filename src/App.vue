@@ -3,10 +3,13 @@ import NavbarVue from "./components/NavbarVue.vue";
 import FooterComponent from "./components/FooterComponent.vue";
 import CartComponent from "./components/CartComponent.vue";
 import FavoritesComponent from "./components/FavoritesComponent.vue";
-import { ref, watch } from "vue";
+import { onBeforeMount, ref, watch } from "vue";
 import { useRoute } from "vue-router";
 import OrderSuccessModal from "./components/OrderSuccessModal.vue";
+import { getAuth, onAuthStateChanged } from "@firebase/auth";
+import { useStore } from "./store";
 const route = useRoute();
+const store = useStore();
 const cartOpen = ref<boolean>(false);
 const favoritesOpen = ref<boolean>(false);
 const menuOpen = ref<boolean>(false);
@@ -31,6 +34,37 @@ watch(route, ()=>{
   cartOpen.value = false;
   favoritesOpen.value = false;
 })
+
+onBeforeMount(()=>{
+  const auth = getAuth()
+  onAuthStateChanged(auth, (user)=>{
+    if (user){
+      console.log(user);
+      store.logIn();
+      store.setUser(user.uid);
+      store.getDatabase()
+    }
+  })
+})
+
+/*
+onBeforeMount(()=>{
+  const auth = getAuth()
+  onAuthStateChanged(auth, (user)=>{
+         if(user){
+             router.push({
+                 path:"/invoices"
+             })
+             invoiceStore.setUser(user);
+             invoiceStore.getDatabase()
+             console.log('logged in')
+         } else if(route.path != "/"){
+            invoiceStore.demoMode = true;
+            invoiceStore.loadInvoices(json)
+         }
+     })
+})
+*/
 </script>
 
 <template>

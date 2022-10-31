@@ -1,11 +1,14 @@
 import { defineStore } from 'pinia'
 import CartItem from '../types/CartItem'
 import CategoryProducts from '../types/CategoryProducts'
+import { getFirestore, collection, onSnapshot, addDoc, doc, deleteDoc } from '@firebase/firestore'
 
 export const useStore = defineStore('main', {
     state: ()=>({
         cart:[] as CartItem[],
         favorites:[] as CategoryProducts[],
+        isLoggedIn:false as boolean,
+        userId:"" as string
     }),
     getters:{
         getItem:(state)=>{
@@ -46,21 +49,74 @@ export const useStore = defineStore('main', {
             }
         },
         removeAllItems(){
-            this.cart = []
+            this.cart = [];
+            /*
+            const db = getFirestore();
+            const docRef = doc(db, 'users', this.user.uid, 'invoices', docId);
+            deleteDoc(docRef)
+                .then(()=>{
+                    console.log("invoice deleted")
+                })
+            */
         },
         removeFromCart(data:CartItem){
             const idx = this.cart.findIndex((el)=> el.slug === data.slug);
             this.cart.splice(idx,1)
         },
         addToFavorites(data:CategoryProducts){
-            this.favorites.unshift(data)
+            //this.favorites.unshift(data);
+            const db = getFirestore();
+            const docRef = collection(db, `users/${this.userId}/favorites`);
+            addDoc(docRef, {...data})
+                .then(()=>{
+                    console.log("document added")
+                    console.log(this.favorites)
+                })
+                .catch((err)=>{
+                    console.log(err)
+                })
         },
         removeFromFavorites(data:CategoryProducts){
-            const idx = this.favorites.findIndex((el)=> el.slug === data.slug);
-            this.favorites.splice(idx,1)
+            // const idx = this.favorites.findIndex((el)=> el.slug === data.slug);
+            // this.favorites.splice(idx,1)
+            const db = getFirestore();
+            const docRef = doc(db, 'users', this.userId, 'favorites', data.docId)
+            deleteDoc(docRef)
+                .then(()=>{
+                    console.log("document deleted")
+                })
         },
         removeAllFavorites(){
-            this.favorites = []
+            // this.favorites = []
+            const db = getFirestore();
+            for (let favorite of this.favorites){
+                const docRef = doc(db, 'users', this.userId, 'favorites', favorite.docId)
+                deleteDoc(docRef)
+                .then(()=>{
+                    console.log("document deleted")
+                })
+            }
+        },
+        logIn(){
+            this.isLoggedIn = true
+        },
+        logOut(){
+            this.isLoggedIn = false
+        },
+        setUser(uid:string){
+            this.userId = uid
+        },
+        getDatabase(){
+            const db = getFirestore();
+            const colRef = collection(db, `users/${this.userId}/favorites`);
+            onSnapshot(colRef, (snapshot)=>{
+                let likes:CategoryProducts[] = [];
+                snapshot.docs.forEach((doc)=>{
+                    likes.push({...doc.data(), docId: doc.id} as CategoryProducts)
+                })
+                this.favorites = likes
+                console.log(this.favorites)
+            })
         }
     },
   })
