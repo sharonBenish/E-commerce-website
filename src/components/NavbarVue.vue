@@ -59,6 +59,7 @@ const goToSignup = ()=>{
 const logOut = ()=>{
     signOut(auth)
         .then(()=>{
+            store.logOut();
             console.log("user logged out")
         })
         .catch((err)=>{
@@ -92,10 +93,11 @@ const logOut = ()=>{
             <div class="user_icons">
                 <div class="user_icon" @click="toggleUserDropdown">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="25" height="25"><path fill="none" d="M0 0h24v24H0z"/><path d="M4 22a8 8 0 1 1 16 0h-2a6 6 0 1 0-12 0H4zm8-9c-3.315 0-6-2.685-6-6s2.685-6 6-6 6 2.685 6 6-2.685 6-6 6zm0-2c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4z" fill="rgba(255,255,255,1)"/></svg>
+                    <img class="user-check" v-if="store.isLoggedIn" src="../assets/shared/desktop/check-fill.svg" alt="">
                     <div v-if="userDropdown">
                         <ul>
-                            <li @click="goToLogin">Login</li>
-                            <li @click="logOut">Logout</li>
+                            <li @click="goToLogin" v-if="!store.isLoggedIn">Login</li>
+                            <li @click="logOut" v-else>Logout</li>
                             <li @click="goToSignup">Sign Up</li>
                             <li>Account History</li>
                         </ul>
@@ -227,6 +229,15 @@ nav.desktop-nav{
 
 .user_icon > div li:not(:last-of-type){
     border-bottom:1px solid #fff;
+}
+
+.user-check{
+    position:absolute;
+    bottom: 0;
+    right:-10px;
+    border-radius: 50%;
+    background:#fff;
+    width:20px;
 }
 @media (min-width:1200px) {
     .mobile-nav{
