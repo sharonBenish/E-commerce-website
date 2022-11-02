@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import CartItem from '../types/CartItem'
 import CategoryProducts from '../types/CategoryProducts'
-import { getFirestore, collection, onSnapshot, addDoc, doc, deleteDoc, serverTimestamp } from '@firebase/firestore'
+import { getFirestore, collection, onSnapshot, addDoc, doc, deleteDoc, serverTimestamp, updateDoc } from '@firebase/firestore'
 import AccountHistory from '../types/AccountHistory'
 
 export const useStore = defineStore('main', {
@@ -42,6 +42,26 @@ export const useStore = defineStore('main', {
             }else{
                 this.cart.push(data)
             }
+
+            // const db = getFirestore();
+            // const docRef = collection(db, `users/${this.userId}/cart`);
+            // const item = this.cart.find((el)=>el.slug == data.slug);
+            // if (item){
+            //     const docRef = doc(db, 'users', this.userId, 'invoices', docId);
+            //     updateDoc(docRef, data)
+            //         .then(()=>{
+            //             console.log("cart updated")
+            //         })
+            // }else{
+            //     addDoc(docRef, {...data})
+            //     .then(()=>{
+            //         console.log("item added")
+            //         console.log(this.cart)
+            //     })
+            //     .catch((err)=>{
+            //         console.log(err)
+            //     })
+            // }
         },
         updateQuantity(data:CartItem, amount:number){
             const item = this.cart.find((el)=>el.slug == data.slug);
@@ -51,19 +71,11 @@ export const useStore = defineStore('main', {
             }
         },
         removeAllItems(){
-            this.cart = [];
-            /*
-            const db = getFirestore();
-            const docRef = doc(db, 'users', this.user.uid, 'invoices', docId);
-            deleteDoc(docRef)
-                .then(()=>{
-                    console.log("invoice deleted")
-                })
-            */
+            // this.cart = [];
         },
         removeFromCart(data:CartItem){
-            const idx = this.cart.findIndex((el)=> el.slug === data.slug);
-            this.cart.splice(idx,1)
+            // const idx = this.cart.findIndex((el)=> el.slug === data.slug);
+            // this.cart.splice(idx,1)
         },
         addToHistory(data:CartItem[]){
             const db = getFirestore();
@@ -111,16 +123,25 @@ export const useStore = defineStore('main', {
             }
         },
         logIn(){
+            this.orderHistory = [];
+            this.favorites = [];
+            this.userId="";
+            this.cart = [];
             this.isLoggedIn = true
         },
         logOut(){
-            this.isLoggedIn = false
+            this.isLoggedIn = false;
+            this.orderHistory = [];
+            this.favorites = [];
+            this.userId="";
+            this.cart=[]
         },
         setUser(uid:string){
             this.userId = uid
         },
         getDatabase(){
             const db = getFirestore();
+            //load favorites
             const favColRef = collection(db, `users/${this.userId}/favorites`);
             onSnapshot(favColRef, (snapshot)=>{
                 let likes:CategoryProducts[] = [];
@@ -130,6 +151,7 @@ export const useStore = defineStore('main', {
                 this.favorites = likes
                 console.log(this.favorites)
             });
+            //load account history
             const accountColRef = collection(db, `users/${this.userId}/accountHistory`);
             onSnapshot(accountColRef, (snapshot)=>{
                 let history:AccountHistory[] = [];
@@ -138,6 +160,16 @@ export const useStore = defineStore('main', {
                 })
                 this.orderHistory = history
                 console.log(this.orderHistory)
+            })
+
+            //load cart
+            const cartColRef = collection(db, `users/${this.userId}/cart`);
+            onSnapshot(cartColRef, (snapshot)=>{
+                let cartItems: CartItem[] =[];
+                snapshot.docs.forEach((doc)=>{
+                    cartItems.push({...doc.data(), id: doc.id} as CartItem)
+                })
+                this.cart = cartItems
             })
         }
     },

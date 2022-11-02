@@ -60,6 +60,9 @@ const logOut = ()=>{
     signOut(auth)
         .then(()=>{
             store.logOut();
+            router.push({
+                name:'home'
+            })
             console.log("user logged out")
         })
         .catch((err)=>{

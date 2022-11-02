@@ -4,7 +4,8 @@ interface CartItem{
     slug:string,
     price:number,
     cart:ShopLinks,
-    quantity:number
+    quantity:number,
+    id:string
 }
 
 export default CartItem

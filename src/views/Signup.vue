@@ -67,4 +67,10 @@ button{
     max-width:800px;
     margin: 0 auto;
 }
+form a{
+    color:#d87d4a
+}
+form a:hover{
+    text-decoration: underline;
+}
 </style>
