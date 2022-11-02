@@ -66,6 +66,12 @@ const logOut = ()=>{
             console.log(err.message)
         })
 }
+
+const goToHistory = ()=>{
+    router.push({
+        name:'history'
+    })
+}
 </script>
 
 <template>
@@ -99,7 +105,7 @@ const logOut = ()=>{
                             <li @click="goToLogin" v-if="!store.isLoggedIn">Login</li>
                             <li @click="logOut" v-else>Logout</li>
                             <li @click="goToSignup">Sign Up</li>
-                            <li>Account History</li>
+                            <li @click="goToHistory">Account History</li>
                         </ul>
                     </div>
                 </div>

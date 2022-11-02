@@ -9,6 +9,7 @@ const router = useRouter();
 
 const goHome = ()=>{
     emit('homeClicked');
+    store.addToHistory(store.cart);
     store.removeAllItems();
     router.push({
         name:'home'

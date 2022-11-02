@@ -1,11 +1,13 @@
 import { defineStore } from 'pinia'
 import CartItem from '../types/CartItem'
 import CategoryProducts from '../types/CategoryProducts'
-import { getFirestore, collection, onSnapshot, addDoc, doc, deleteDoc } from '@firebase/firestore'
+import { getFirestore, collection, onSnapshot, addDoc, doc, deleteDoc, serverTimestamp } from '@firebase/firestore'
+import AccountHistory from '../types/AccountHistory'
 
 export const useStore = defineStore('main', {
     state: ()=>({
         cart:[] as CartItem[],
+        orderHistory:[] as AccountHistory[],
         favorites:[] as CategoryProducts[],
         isLoggedIn:false as boolean,
         userId:"" as string
@@ -63,6 +65,17 @@ export const useStore = defineStore('main', {
             const idx = this.cart.findIndex((el)=> el.slug === data.slug);
             this.cart.splice(idx,1)
         },
+        addToHistory(data:CartItem[]){
+            const db = getFirestore();
+            const docRef = collection(db, `users/${this.userId}/accountHistory`);
+            addDoc(docRef, {items:[...data], date:serverTimestamp()})
+                .then(()=>{
+                    console.log("added to account history")
+                })
+                .catch((err)=>{
+                    console.log(err)
+                })
+        },
         addToFavorites(data:CategoryProducts){
             //this.favorites.unshift(data);
             const db = getFirestore();
@@ -108,14 +121,23 @@ export const useStore = defineStore('main', {
         },
         getDatabase(){
             const db = getFirestore();
-            const colRef = collection(db, `users/${this.userId}/favorites`);
-            onSnapshot(colRef, (snapshot)=>{
+            const favColRef = collection(db, `users/${this.userId}/favorites`);
+            onSnapshot(favColRef, (snapshot)=>{
                 let likes:CategoryProducts[] = [];
                 snapshot.docs.forEach((doc)=>{
                     likes.push({...doc.data(), docId: doc.id} as CategoryProducts)
                 })
                 this.favorites = likes
                 console.log(this.favorites)
+            });
+            const accountColRef = collection(db, `users/${this.userId}/accountHistory`);
+            onSnapshot(accountColRef, (snapshot)=>{
+                let history:AccountHistory[] = [];
+                snapshot.docs.forEach((doc)=>{
+                    history.push({...doc.data(), id: doc.id} as AccountHistory)
+                })
+                this.orderHistory = history
+                console.log(this.orderHistory)
             })
         }
     },

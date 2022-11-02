@@ -7,6 +7,7 @@ import SeeProduct from '../views/SeeProduct.vue'
 import CheckOutPageVue from '../views/CheckOutPage.vue'
 import LoginPageVue from '../views/LoginPage.vue'
 import SignupVue from '../views/Signup.vue'
+import OrderHistoryVue from '../views/OrderHistory.vue'
 
 const routes = [
     {
@@ -48,6 +49,11 @@ const routes = [
         path:'/signup',
         name:'signup',
         component:SignupVue
+    },
+    {
+        path:'/history',
+        name:'history',
+        component:OrderHistoryVue
     }
 ]
 

@@ -43,7 +43,7 @@ import ProductBtn from "../components/ProductBtn.vue";
       <div class="yx1_earphones card">
         <div class="details">
           <h3>yx1 earphones</h3>
-          <ProductBtn :id="'yx1-earphones'" class="transparent_btn" :category="'earphones'" />
+          <ProductBtn :id="'yx1-wireless-earphones'" class="transparent_btn" :category="'earphones'" />
         </div>
       </div>
     </div>
