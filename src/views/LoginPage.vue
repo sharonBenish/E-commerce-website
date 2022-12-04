@@ -20,13 +20,12 @@ const login = ()=>{
     signInWithEmailAndPassword(auth, loginDetails.value.email, loginDetails.value.password)
         .then((cred)=>{
             console.log('user logged in:', cred.user);
-            store.logIn();
+            //store.logIn();
             form.value.reset();
-            router.go(-1);
-            // if (store.prevRoute == "product")
-            // router.push({
-            //     name:'home'
-            // })
+            //router.go(-1);
+            router.push({
+                name:'home'
+            })
         })
         .catch((err)=>{
             console.log(err.message)

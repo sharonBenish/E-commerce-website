@@ -39,7 +39,6 @@ const formValidation = (event:Event)=>{
     })
 }
 
-
 const pay = (e:Event)=>{
     formValidation(e)
     if(isValid.value){

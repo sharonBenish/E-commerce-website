@@ -7,6 +7,7 @@ import AccountHistory from '../types/AccountHistory'
 export const useStore = defineStore('main', {
     state: ()=>({
         cart:[] as CartItem[],
+        localCart:[] as CartItem[],
         orderHistory:[] as AccountHistory[],
         favorites:[] as CategoryProducts[],
         isLoggedIn:false as boolean,
@@ -36,46 +37,91 @@ export const useStore = defineStore('main', {
     },
     actions: {
         addToCart(data:CartItem){
-            const item = this.cart.find((el)=>el.slug == data.slug);
-            if (item){
-                item.quantity ++
-            }else{
-                this.cart.push(data)
+            if(this.isLoggedIn){
+                const db = getFirestore();
+                const docRef = collection(db, `users/${this.userId}/cart`);
+                const item = this.cart.find((el)=>el.slug == data.slug);
+                if (item){
+                    console.log("in here");
+                    console.log(item);
+                    const docRef = doc(db, 'users', this.userId, 'cart', item.id);
+                    const update = {
+                        quantity : data.quantity,
+                        id:item.id
+                    }
+                    updateDoc(docRef, update)
+                        .then(()=>{
+                            console.log("cart updated")
+                        })
+                }else{
+                    console.log("adding")
+                    addDoc(docRef, {...data})
+                    .then(()=>{
+                        console.log("item added")
+                        console.log(this.cart)
+                    })
+                    .catch((err)=>{
+                        console.log(err)
+                    })
+                }
+            } else{
+                const item = this.cart.find((el)=>el.slug == data.slug);
+                if (item){
+                    item.quantity = data.quantity
+                }else{
+                    this.cart.push(data)
+                }
             }
-
-            // const db = getFirestore();
-            // const docRef = collection(db, `users/${this.userId}/cart`);
-            // const item = this.cart.find((el)=>el.slug == data.slug);
-            // if (item){
-            //     const docRef = doc(db, 'users', this.userId, 'invoices', docId);
-            //     updateDoc(docRef, data)
-            //         .then(()=>{
-            //             console.log("cart updated")
-            //         })
-            // }else{
-            //     addDoc(docRef, {...data})
-            //     .then(()=>{
-            //         console.log("item added")
-            //         console.log(this.cart)
-            //     })
-            //     .catch((err)=>{
-            //         console.log(err)
-            //     })
-            // }
         },
         updateQuantity(data:CartItem, amount:number){
-            const item = this.cart.find((el)=>el.slug == data.slug);
-            if (item){
-                item.quantity = amount;
-                console.log(item)
+            if (this.isLoggedIn){
+                const db = getFirestore();
+                const docRef = doc(db, 'users', this.userId, 'cart', data.id);
+                const item = this.cart.find((el)=>el.slug == data.slug);
+                const update = {
+                    quantity : amount 
+                }
+                if (item){
+                    updateDoc(docRef, update)
+                    .then(()=>{
+                        console.log("cart updated")
+                    })
+                }
+            } else{
+                const item = this.cart.find((el)=>el.slug == data.slug);
+                if (item){
+                    item.quantity = amount;
+                    //console.log(item)
+                }
             }
         },
         removeAllItems(){
-            // this.cart = [];
+            if(this.isLoggedIn){
+                const db = getFirestore();
+                for (let item of this.cart){
+                    const docRef = doc(db, 'users', this.userId, 'cart', item.id)
+                    deleteDoc(docRef)
+                    .then(()=>{
+                        console.log("document deleted")
+                    })
+                }
+            }else{
+                this.cart = [];
+            }
         },
         removeFromCart(data:CartItem){
-            // const idx = this.cart.findIndex((el)=> el.slug === data.slug);
-            // this.cart.splice(idx,1)
+            if(this.isLoggedIn){
+                const db = getFirestore();
+                const docRef = doc(db, 'users', this.userId, 'cart', data.id)
+                deleteDoc(docRef)
+                    .then(()=>{
+                        console.log("document deleted")
+                    })
+            }else{
+                const idx = this.cart.findIndex((el)=> el.slug === data.slug);
+                this.cart.splice(idx,1)
+            }
+            
         },
         addToHistory(data:CartItem[]){
             const db = getFirestore();
@@ -98,6 +144,7 @@ export const useStore = defineStore('main', {
                     console.log(this.favorites)
                 })
                 .catch((err)=>{
+                    console.log("error adding to favorites")
                     console.log(err)
                 })
         },
@@ -125,9 +172,29 @@ export const useStore = defineStore('main', {
         logIn(){
             this.orderHistory = [];
             this.favorites = [];
-            this.userId="";
+            //this.userId="";
+            //this.cart = [];
+            this.isLoggedIn = true;
+            if(this.cart.length > 0){
+                console.log("not empty");
+                for(let item of this.cart){
+                    this.localCart.push(item)
+                }
+                console.log(this.localCart)
+            }
             this.cart = [];
-            this.isLoggedIn = true
+        },
+        updateCartFromLocal(){
+            for(let item of this.localCart){
+                console.log(this.cart)
+                if (this.cart.find(cartItem => cartItem.slug == item.slug)){
+                    console.log("found");
+                    return
+                }else{
+                    this.addToCart(item)
+                }
+            }
+            this.localCart =[]
         },
         logOut(){
             this.isLoggedIn = false;
@@ -152,15 +219,15 @@ export const useStore = defineStore('main', {
                 console.log(this.favorites)
             });
             //load account history
-            const accountColRef = collection(db, `users/${this.userId}/accountHistory`);
-            onSnapshot(accountColRef, (snapshot)=>{
-                let history:AccountHistory[] = [];
-                snapshot.docs.forEach((doc)=>{
-                    history.push({...doc.data(), id: doc.id} as AccountHistory)
-                })
-                this.orderHistory = history
-                console.log(this.orderHistory)
-            })
+            // const accountColRef = collection(db, `users/${this.userId}/accountHistory`);
+            // onSnapshot(accountColRef, (snapshot)=>{
+            //     let history:AccountHistory[] = [];
+            //     snapshot.docs.forEach((doc)=>{
+            //         history.push({...doc.data(), id: doc.id} as AccountHistory)
+            //     })
+            //     this.orderHistory = history
+            //     console.log(this.orderHistory)
+            // })
 
             //load cart
             const cartColRef = collection(db, `users/${this.userId}/cart`);
@@ -169,8 +236,11 @@ export const useStore = defineStore('main', {
                 snapshot.docs.forEach((doc)=>{
                     cartItems.push({...doc.data(), id: doc.id} as CartItem)
                 })
-                this.cart = cartItems
+                this.cart = cartItems;
             })
+            // if (this.localCart.length > 0){
+            //     this.updateCartFromLocal()
+            // }
         }
     },
   })

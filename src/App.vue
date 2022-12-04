@@ -3,7 +3,7 @@ import NavbarVue from "./components/NavbarVue.vue";
 import FooterComponent from "./components/FooterComponent.vue";
 import CartComponent from "./components/CartComponent.vue";
 import FavoritesComponent from "./components/FavoritesComponent.vue";
-import { onBeforeMount, ref, watch } from "vue";
+import { onBeforeMount, onMounted, ref, watch } from "vue";
 import { useRoute } from "vue-router";
 import OrderSuccessModal from "./components/OrderSuccessModal.vue";
 import { getAuth, onAuthStateChanged } from "@firebase/auth";
@@ -40,12 +40,19 @@ onBeforeMount(()=>{
   onAuthStateChanged(auth, (user)=>{
     if (user){
       console.log(user);
-      store.logIn();
       store.setUser(user.uid);
-      store.getDatabase()
+      store.logIn();
+      store.getDatabase();
     }
   })
 })
+
+// onMounted(()=>{
+//   console.log(store.localCart)
+//   if (store.localCart.length > 0){
+//         store.updateCartFromLocal()
+//       }
+// })
 
 /*
 onBeforeMount(()=>{

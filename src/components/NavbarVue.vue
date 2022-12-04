@@ -108,7 +108,7 @@ const goToHistory = ()=>{
                             <li @click="goToLogin" v-if="!store.isLoggedIn">Login</li>
                             <li @click="logOut" v-else>Logout</li>
                             <li @click="goToSignup">Sign Up</li>
-                            <li @click="goToHistory">Account History</li>
+                            <li v-if="store.isLoggedIn" @click="goToHistory">Account History</li>
                         </ul>
                     </div>
                 </div>

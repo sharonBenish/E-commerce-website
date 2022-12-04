@@ -37,7 +37,8 @@ const addToCart = (amount:number)=>{
         slug:props.product.slug,
         price:props.product.price,
         cart:props.product.cart,
-        quantity: amount
+        quantity: amount,
+        id:""
     };
     store.addToCart(item)
 }
@@ -66,7 +67,8 @@ const likeItem = ()=>{
         return
     }
     if (liked.value){
-        store.removeFromFavorites(props.product as CategoryProducts)
+        const item = store.favorites.find((fav)=> fav.slug == props.product.slug);
+        store.removeFromFavorites(item as CategoryProducts);
     }else{
         store.addToFavorites(props.product as CategoryProducts)
     }

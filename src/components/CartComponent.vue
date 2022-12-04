@@ -6,15 +6,23 @@ import { useRouter } from "vue-router";
 
 const router = useRouter();
 const store = useStore();
+
 const cartItems = computed(()=>{
     return store.cart
 })
 
 const goToCheckOut = ()=>{
-    router.push({
-        name:'checkout'
-    })
+    //if(store.isLoggedIn){
+        router.push({
+            name:'checkout'
+        })
+    // }else{
+    //     router.push({
+    //         name:'login'
+    //     })
+    // }
 }
+
 
 </script>
 

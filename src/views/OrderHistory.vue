@@ -9,6 +9,7 @@ const store = useStore();
         <div class="content">
             <h2>ORDER HISTORY</h2>
             <div class="order_grid">
+                <h3 v-if="(store.orderHistory.length == 0)">No orders made yet</h3>
                 <div v-for="(order, index) in store.orderHistory" :key="index">
                     <h3 class="items_heading">Items</h3>
                     <h3 class="date_heading">Ordered On</h3>
